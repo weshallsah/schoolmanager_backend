@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
@@ -9,6 +9,9 @@ const studentSchema = new mongoose.Schema(
     school: {
       type: String,
       require: true,
+    },
+    photo: {
+      type: mongoose.Types.ObjectId,
     },
     enroll: {
       type: String,
@@ -25,10 +28,10 @@ const studentSchema = new mongoose.Schema(
       type: String,
     },
     gender: {
-      type: Boolean,
-    },
-    age: {
       type: Number,
+    },
+    dob: {
+      type: String,
     },
     address: {
       type: String,
@@ -37,6 +40,18 @@ const studentSchema = new mongoose.Schema(
     status: {
       type: Boolean,
       default: true,
+    },
+    mothertoungue: {
+      type: String,
+    },
+    aadhar: {
+      type: String,
+    },
+    nationality: {
+      type: String,
+    },
+    placeofbrith: {
+      type: String,
     },
   },
   {

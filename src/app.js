@@ -19,9 +19,11 @@ app.get("/",async(req,res)=>{
     })
 });
 
-import studentroutes from "./routes/student.routes.js"
+import studentroutes from "./routes/student.routes.js";
+import teacherroutes from "./routes/teacher.routes.js";
 
 
 app.use("/api/v1/student",studentroutes);
+app.use("/api/v1/teacher",teacherroutes);
 
 export { app };
