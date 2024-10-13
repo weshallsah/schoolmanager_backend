@@ -11,12 +11,6 @@ const attendanceSchema = mongoose.Schema(
         ref: "Student",
       },
     ],
-    absent: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "Student",
-      },
-    ],
   },
   { imestamps: true }
 );
