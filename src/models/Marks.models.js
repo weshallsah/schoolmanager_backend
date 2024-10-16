@@ -14,6 +14,10 @@ const markSchema = mongoose.Schema(
       type: Number,
       require: true,
     },
+    progress: {
+      type: Boolean,
+      default: false,
+    },
     subject: [
       {
         type: String,

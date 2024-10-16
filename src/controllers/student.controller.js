@@ -135,6 +135,7 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
                 tream: 1,
                 subject: 1,
                 marks: 1,
+                progress: 1,
               },
             },
           ],
@@ -149,13 +150,13 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
         },
       },
       {
-        $project:{
-          "result":1,
-          "name":1,
-          "enroll":1,
-          "standard":1,
-        }
-      }
+        $project: {
+          result: 1,
+          name: 1,
+          enroll: 1,
+          standard: 1,
+        },
+      },
     ]);
     console.log(payload);
     return res

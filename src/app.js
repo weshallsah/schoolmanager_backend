@@ -34,8 +34,8 @@ app.use("/api/v1/subjects", subjectroutes);
 app.use("/api/v1/marks", marksroutes);
 // var cnt = 0;
 // if (cnt == 0) {
-//   generateCertificate();
-//   cnt++;
+// generateCertificate();
+// cnt++;
 // }
 
 export { app };
