@@ -4,6 +4,11 @@ const attendanceSchema = mongoose.Schema(
   {
     Date: {
       type: String,
+      unique: true,
+    },
+    school:{
+      type:String,
+      require:true,
     },
     present: [
       {
@@ -14,3 +19,5 @@ const attendanceSchema = mongoose.Schema(
   },
   { imestamps: true }
 );
+
+export const Attendance = mongoose.model("Attendance", attendanceSchema);

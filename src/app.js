@@ -23,11 +23,15 @@ import teacherroutes from "./routes/teacher.routes.js";
 import cretificateroutes from "./routes/certificates.routes.js";
 import { generateCertificate } from "./controllers/generate.controller.js";
 import attendanceroute from "./routes/attendance.routes.js";
+import subjectroutes from "./routes/subjects.routes.js";
+import marksroutes from "./routes/marks.routes.js";
 
 app.use("/api/v1/student", studentroutes);
 app.use("/api/v1/teacher", teacherroutes);
 app.use("/api/v1/certificate", cretificateroutes);
 app.use("/api/v1/attendance", attendanceroute);
+app.use("/api/v1/subjects", subjectroutes);
+app.use("/api/v1/marks", marksroutes);
 // var cnt = 0;
 // if (cnt == 0) {
 //   generateCertificate();

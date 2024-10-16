@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { admission, removestudent } from "../controllers/student.controller.js";
+import {
+  admission,
+  listStudent,
+  removestudent,
+  Studentmarks,
+} from "../controllers/student.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 const routes = Router();
 
@@ -14,5 +19,9 @@ routes.route("/admission").post(
 );
 
 routes.route("/remove/:enroll").get(removestudent);
+
+routes.route("/list/:school").get(listStudent);
+
+routes.route("/marks/:school/:tream/:STD").get(Studentmarks);
 
 export default routes;

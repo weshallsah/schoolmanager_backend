@@ -50,6 +50,10 @@ const studentSchema = new mongoose.Schema(
     nationality: {
       type: String,
     },
+    standard: {
+      type: Number,
+      default: 1,
+    },
     placeofbrith: {
       type: String,
     },

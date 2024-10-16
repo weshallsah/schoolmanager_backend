@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { uploadattenndance } from "../controllers/attendance.controller.js";
-
+import {
+  listattendance,
+  uploadattenndance,
+} from "../controllers/attendance.controller.js";
 
 const routes = Router();
 
-routes.route('/upload').post(
-    uploadattenndance
-);
+routes.route("/upload/:Date/:School").post(uploadattenndance);
+routes.route("/list/:Date/:School").get(listattendance);
 
 export default routes;

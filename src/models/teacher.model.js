@@ -11,6 +11,9 @@ const teacherSchema = mongoose.Schema({
     require: true,
     unique: true,
   },
+  photo: {
+    type: mongoose.Types.ObjectId,
+  },
   fathername: {
     type: String,
   },
@@ -25,13 +28,14 @@ const teacherSchema = mongoose.Schema({
     type: String,
   },
   gender: {
-    type: Boolean,
-  },
-  age: {
     type: Number,
+  },
+  dob: {
+    type: String,
   },
   email: {
     type: String,
+    require: true,
   },
   isadmin: {
     type: Boolean,
@@ -44,6 +48,10 @@ const teacherSchema = mongoose.Schema({
   school: {
     type: String,
     require: true,
+  },
+  standard: {
+    type: Number,
+    default: -1,
   },
   status: {
     type: Boolean,
