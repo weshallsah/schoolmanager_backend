@@ -1,65 +1,169 @@
-export const leavingcertificate = () => {
-  `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+export const leavingcertificate = (
+  school = "school name",
+  address = "school address",
+  Affiliated = "affilated by",
+  state = "Maharashtra",
+  contact = "9511286245",
+  AffiliationNo,
+  UDiseCode,
+  SchoolCode,
+  GRNo,
+  StudentID,
+  SerialNo,
+  Name,
+  MotherName,
+  FatherName,
+  DoB,
+  Nationality,
+  Religion,
+  DateofAdmission,
+  AdmissionClass,
+  Class,
+  Examresult,
+  lastpaiddues,
+  FeeConcession,
+  activites,
+  GeneralConduct,
+  ReasonforLeaving,
+  Remarks
+) => {
+  return `<svg width="850" height="1200" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="800" height="1000" fill="#ffffff"/>
-  
+  <rect width="850" height="1200" fill="#f5f5dc" />
+
   <!-- Header -->
-  <rect width="800" height="100" fill="#1a3a5c"/>
-  <text x="400" y="60" font-family="Poppins, sans-serif" font-size="28" fill="white" text-anchor="middle" font-weight="bold">GOPAL'S GARDEN HIGH SCHOOL</text>
-  <text x="400" y="85" font-family="Poppins, sans-serif" font-size="14" fill="white" text-anchor="middle">Plot No.1, Kulupwadi, Near National Park, Borivali (East), Mumbai 400 066. Tel.: 2884 7010</text>
-  
-  <!-- Content -->
-  <text x="400" y="130" font-family="Poppins, sans-serif" font-size="24" fill="#3498db" text-anchor="middle" font-weight="bold">LEAVING CERTIFICATE</text>
-  
+  <text x="425" y="70" font-family="Arial" font-size="28" font-weight="bold" text-anchor="middle">
+    ${school}
+  </text>
+  <text x="425" y="100" font-family="Arial" font-size="16" text-anchor="middle">
+    ${address}
+  </text>
+  <text x="425" y="125" font-family="Arial" font-size="16" text-anchor="middle">
+    ${Affiliated}, ${state}, Tel.: ${contact}
+  </text>
+
   <!-- School Details -->
-  <text x="50" y="170" font-family="Poppins, sans-serif" font-size="14" fill="#333">Affiliation No.: 1130571</text>
-  <text x="300" y="170" font-family="Poppins, sans-serif" font-size="14" fill="#333">U-Dise Code : 27230700401</text>
-  <text x="600" y="170" font-family="Poppins, sans-serif" font-size="14" fill="#333">School Code : 30502</text>
+  <text x="50" y="170" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Affiliation No.:</tspan> ${AffiliationNo}
+  </text>
+  <text x="300" y="170" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">U-Dise Code: </tspan> ${UDiseCode}
+  </text>
+  <text x="600" y="170" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">School Code: </tspan> ${SchoolCode}
+  </text>
+
+  <!-- Student Information -->
+  <text x="50" y="210" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">G.R. No.:</tspan> ${GRNo}
+  </text>
+  <text x="300" y="210" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Student ID: </tspan> ${StudentID}
+  </text>
+  <text x="50" y="250" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Serial No.: </tspan> ${SerialNo}
+  </text>
   
-  <!-- Student Details -->
-  <text x="50" y="210" font-family="Poppins, sans-serif" font-size="14" fill="#333">G.R. No.: 412</text>
-  <text x="300" y="210" font-family="Poppins, sans-serif" font-size="14" fill="#333">Student ID: 2D1827236700401002A</text>
-  <text x="600" y="210" font-family="Poppins, sans-serif" font-size="14" fill="#333">Serial No.: 219</text>
-  
-  <text x="50" y="250" font-family="Poppins, sans-serif" font-size="14" fill="#333">Name of the Pupil : AUM JOSHI</text>
-  <text x="50" y="280" font-family="Poppins, sans-serif" font-size="14" fill="#333">Mother's Name : KIRAN</text>
-  <text x="400" y="280" font-family="Poppins, sans-serif" font-size="14" fill="#333">Father's Name: JITESH</text>
-  <text x="50" y="310" font-family="Poppins, sans-serif" font-size="14" fill="#333">Date of Birth : (in figures) 30/08/2010 (in words) THIRTIETH AUGUST TWO THOUSAND TEN</text>
-  <text x="50" y="340" font-family="Poppins, sans-serif" font-size="14" fill="#333">Nationality : INDIAN                    Religion : HINDU                    Caste : -</text>
-  
-  <!-- Academic Details -->
-  <text x="50" y="370" font-family="Poppins, sans-serif" font-size="14" fill="#333">Date Of First Admission In the School With Class : 23/10/2018 Class : IV</text>
-  <text x="50" y="400" font-family="Poppins, sans-serif" font-size="14" fill="#333">Class in which the pupil last studied : V (in figures) FIFTH (in words)</text>
-  <text x="50" y="430" font-family="Poppins, sans-serif" font-size="14" fill="#333">School/Board Annual Examination last taken with result : YES/PASSED</text>
-  <text x="50" y="460" font-family="Poppins, sans-serif" font-size="14" fill="#333">Subjects Studied: 1) ENGLISH 2) HINDI 3) MARATHI 4) SANSKRIT 5) MATH 6) EVS</text>
-  <text x="50" y="490" font-family="Poppins, sans-serif" font-size="14" fill="#333">Whether qualified for promotion to the higher class : YES</text>
-  <text x="50" y="520" font-family="Poppins, sans-serif" font-size="14" fill="#333">If so, to which class : VI (in figures) SIXTH (in words)</text>
-  <text x="50" y="550" font-family="Poppins, sans-serif" font-size="14" fill="#333">Month up to which the pupil has paid school dues : MARCH 2021</text>
-  <text x="50" y="580" font-family="Poppins, sans-serif" font-size="14" fill="#333">Any fee concession availed, if so, the nature of such concession: NO</text>
-  <text x="50" y="610" font-family="Poppins, sans-serif" font-size="14" fill="#333">Total No. of working days: 208       Total No. of present days : VERY GOOD</text>
-  <text x="50" y="640" font-family="Poppins, sans-serif" font-size="14" fill="#333">Whether NCC Cadet / Boy Scout / Girl Guide : NO</text>
-  <text x="50" y="670" font-family="Poppins, sans-serif" font-size="14" fill="#333">General Conduct: GOOD</text>
-  <text x="50" y="700" font-family="Poppins, sans-serif" font-size="14" fill="#333">Date of issue of Certificate: 31/08/2021</text>
-  <text x="50" y="730" font-family="Poppins, sans-serif" font-size="14" fill="#333">Reason for leaving the School: PARENT'S WISH</text>
-  <text x="50" y="760" font-family="Poppins, sans-serif" font-size="14" fill="#333">Any other Remark: PASSED &amp; PROMOTED TO STD.VI</text>
-  
-  <!-- Signature Section -->
-  <text x="175" y="850" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Prepared by</text>
-  <text x="175" y="870" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Mrs. Priya Sharma</text>
-  
-  <text x="400" y="850" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Class Teacher</text>
-  <text x="400" y="870" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Mr. Rajesh Patel</text>
-  
-  <text x="625" y="850" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Principal</text>
-  <text x="625" y="870" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle">Dr. Anjali Desai</text>
-  
-  <!-- Digital Print Note -->
-  <text x="400" y="910" font-family="Poppins, sans-serif" font-size="14" fill="#333" text-anchor="middle" font-style="italic">This is a digital print and does not require a seal.</text>
-  
+  <text x="50" y="290" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Name of the student: </tspan> ${Name}
+  </text>
+  <text x="50" y="330" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Mother's Name: </tspan> ${MotherName}
+  </text>
+  <text x="450" y="330" font-family="Arial" font-size="18">
+    <tspan font-weight="bold"> Father's Name:</tspan> ${FatherName}
+  </text>
+  <text x="50" y="370" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Date of Birth: (in figures).:</tspan> ${DoB}
+  </text>
+  <text x="50" y="410" font-family="Arial" font-size="18">
+     <tspan font-weight="bold">(in words).:</tspan> ${" Thirtieth August Two Thousand Ten"}
+  </text>
+  <text x="50" y="450" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Nationality: </tspan> ${Nationality}
+  </text>
+  <text x="500" y="450" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Religion: </tspan> ${Religion}
+  </text>
+
+  <text x="50" y="490" font-family="Arial" font-size="18">
+     <tspan font-weight="bold">Date of First Admission in School with Class: </tspan> ${DateofAdmission}
+  </text> 
+  <text x="650" y="490" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Class: </tspan> ${AdmissionClass}
+  </text> 
+  <text x="50" y="530" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Class in which the pupil last studied:  </tspan>${Class}  
+    
+  </text>
+  <text x="500" y="530" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">(in words)</tspan> ${"Fifth"}
+  </text>
+  <text x="50" y="570" font-family="Arial" font-size="18">
+     <tspan font-weight="bold">School/Board Annual Exam result: </tspan> ${Examresult}
+  </text>
+
+  <!-- Subjects -->
+  <text x="50" y="610" font-family="Arial" font-size="18"><tspan font-weight="bold">Subjects Studied:</tspan></text>
+  <text x="70" y="640" font-family="Arial" font-size="18">1) ${"English"}</text>
+  <text x="220" y="640" font-family="Arial" font-size="18">2) ${"Hindi"}</text>
+  <text x="370" y="640" font-family="Arial" font-size="18">3) ${"Marathi"}</text>
+  <text x="70" y="670" font-family="Arial" font-size="18">4) ${"Sanskrit"}</text>
+  <text x="220" y="670" font-family="Arial" font-size="18">5) ${"Math"}</text>
+  <text x="370" y="670" font-family="Arial" font-size="18">6) ${"EVS"}</text>
+
+  <text x="50" y="710" font-family="Arial" font-size="18">
+   <tspan font-weight="bold"> Promoted to Class: </tspan> ${Class} 
+  </text>
+    <text x="500" y="710" font-family="Arial" font-size="18">
+     <tspan font-weight="bold">(in words) :</tspan> ${"Sixth"} 
+  </text>
+  <text x="50" y="750" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Month up to which pupil has paid dues: </tspan> ${lastpaiddues}
+  </text>
+
+  <text x="50" y="790" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Fee Concession: </tspan>${FeeConcession}
+  </text>
+
+  <text x="50" y="830" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Total No. of Working Days: </tspan> ${206}
+  </text>
+   <text x="500" y="830" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Present Days: </tspan> ${"Very Good"}
+  </text>
+  <text x="50" y="870" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">NCC/Boy Scout/Girl Guide: </tspan> ${activites}
+  </text>
+
+  <text x="50" y="910" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">General Conduct: </tspan> ${GeneralConduct}
+  </text>
+
+  <text x="50" y="950" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Date of Issue: </tspan> ${"31/08/2021"}
+  </text>
+
+  <text x="50" y="990" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Reason for Leaving: </tspan> ${ReasonforLeaving}
+  </text>
+
+  <text x="50" y="1030" font-family="Arial" font-size="18">
+    <tspan font-weight="bold">Remarks: </tspan> ${Remarks}
+  </text>
+
   <!-- Footer -->
-  <text x="50" y="950" font-family="Poppins, sans-serif" font-size="12" fill="#333">Date: 31/08/2021</text>
-  <text x="300" y="950" font-family="Poppins, sans-serif" font-size="12" fill="#333">Place: Mumbai</text>
-  <text x="550" y="950" font-family="Poppins, sans-serif" font-size="12" fill="#333">Academic Year: 2020-2021</text>
-  
-  </svg>`;
+  <line x1="50" y1="1080" x2="350" y2="1080" stroke="black" stroke-width="1"/>
+  <text x="200" y="1100" font-family="Arial" font-size="18" text-anchor="middle">Prepared by</text>
+
+  <line x1="500" y1="1080" x2="800" y2="1080" stroke="black" stroke-width="1"/>
+  <text x="650" y="1100" font-family="Arial" font-size="18" text-anchor="middle">Principal</text>
+
+  <text x="50" y="1130" font-family="Arial" font-size="16">
+    These entries are as per General Register based on information provided by Parent at the time of 
+    Admission
+  </text>
+  <text x="50" y="1150" font-family="Arial" font-size="16">No change for whatsoever reason shall be accepted.</text>
+</svg>
+`;
 };

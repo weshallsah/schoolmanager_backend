@@ -8,8 +8,9 @@ import { AsyncHandeller } from "../utils/AsyncHandeller.utils.js";
 const generateCertificate = async (svg) => {
   try {
     const background = await sharp("./public/media//background.png")
-      .resize(595, 842) // Resize the background if needed
+      .resize(850, 1200) // Resize the background if needed
       .toBuffer();
+    // console.log(svg);
     let textSVG = svg;
     const svgstr = textSVG.replace(/&/g, "&amp;");
     // .replace(/</g, "&lt;")
@@ -27,7 +28,7 @@ const generateCertificate = async (svg) => {
       ])
       .png()
       .toBuffer();
-    // fs.writeFileSync("certificate.png", result);
+    fs.writeFileSync("certificate.png", result);
     console.log("Certificate generated successfully!");
     return result;
   } catch (error) {

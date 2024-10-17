@@ -4,6 +4,9 @@ import { ApiError } from "../utils/ApiError.utils.js";
 import { ApiResponse } from "../utils/ApiResponse.utils.js";
 import { AsyncHandeller } from "../utils/AsyncHandeller.utils.js";
 import fs from "fs";
+import { School } from "../models/School.models.js";
+import { generateCertificate } from "./generate.controller.js";
+import { leavingcertificate } from "../../public/svg/lc.js";
 
 const admission = AsyncHandeller(async (req, res) => {
   try {
@@ -168,4 +171,57 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
   }
 });
 
-export { admission, removestudent, listStudent, Studentmarks };
+const generateLC = AsyncHandeller(async (req, res) => {
+  const {
+    schoolId,
+    StudentID,
+    Examresult,
+    lastpaiddues,
+    FeeConcession,
+    activites,
+    GeneralConduct,
+    ReasonforLeaving,
+    Remarks,
+  } = req.body;
+  const school = await School.findOne({
+    school: schoolId.toLowerCase().trim(),
+  });
+  console.log(school);
+  const student = await Student.findOne({ enroll: StudentID });
+  console.log(student);
+  const date = student["createdAt"];
+  // console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`);
+  const svg = leavingcertificate(
+    schoolId,
+    school["address"],
+    school["Affiliated"],
+    school["state"],
+    school["contact"],
+    school["AffiliationNo"],
+    school["UDiseCode"],
+    school["SchoolCode"],
+    student["GR"],
+    schoolId,
+    "",
+    student["name"],
+    student["mothername"],
+    student["fathername"],
+    student["dob"],
+    student["nationality"],
+    student["religion"],
+    `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+    student["admissionclass"],
+    student["standard"],
+    Examresult,
+    lastpaiddues,
+    FeeConcession,
+    activites,
+    GeneralConduct,
+    ReasonforLeaving,
+    Remarks
+  );
+  const certificate = await generateCertificate(svg);
+  return res.status(200).send(certificate);
+});
+
+export { admission, removestudent, listStudent, Studentmarks, generateLC };
