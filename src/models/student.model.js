@@ -13,7 +13,26 @@ const studentSchema = new mongoose.Schema(
     photo: {
       type: mongoose.Types.ObjectId,
     },
-    
+    religion: {
+      type: String,
+      require: true,
+    },
+    caste: {
+      type: String,
+      require: true,
+    },
+    admissionclass: {
+      type: String,
+      require: true,
+    },
+    serial: {
+      type: String,
+      require: true,
+    },
+    GRNo: {
+      type: String,
+      require: true,
+    },
     enroll: {
       type: String,
       require: true,

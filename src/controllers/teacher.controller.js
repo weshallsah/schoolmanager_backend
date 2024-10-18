@@ -7,14 +7,14 @@ import fs from "fs";
 
 const fire = AsyncHandeller(async (req, res) => {
   try {
-    const { enroll } = await req.params.enroll;
-    const teacher = await Teacher.findOneAndUpdate(
-      { enroll: enroll },
-      { status: false }
-    );
+    const enroll = await req.params.enroll;
+    console.log(enroll);
+    const teacher = await Teacher.findByIdAndUpdate(enroll, { status: false });
+    teacher.save();
+    console.log(teacher);
     return res
       .status(200)
-      .json(new ApiResponse(200, teacher, "teacher added successfully"));
+      .json(new ApiResponse(200, teacher, "teacher fire successfully"));
   } catch (error) {
     console.log("error := ", error);
     return res
@@ -124,7 +124,7 @@ const listTeacher = AsyncHandeller(async (req, res) => {
     console.log(school);
     const payload = await Teacher.aggregate([
       {
-        $match: { school },
+        $match: { school, status: true },
       },
       {
         $project: {
@@ -143,8 +143,26 @@ const listTeacher = AsyncHandeller(async (req, res) => {
   }
 });
 const updateStandard = AsyncHandeller(async (req, res) => {
-  const id = req.params.id;
-  const payload = await Teacher.findByIdandUpdate();
+  try {
+    const id = req.params.id;
+    if (id == null) {
+      throw new ApiError(404, "teacher id not found");
+    }
+    const std = req.params.std;
+    // if(std=)
+    console.log(id);
+    console.log(std);
+    const payload = await Teacher.findByIdAndUpdate(id, { standard: std });
+    console.log(payload);
+    return res
+      .status(200)
+      .json(new ApiResponse(200, payload, "updated successfully"));
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(error.statuscode)
+      .json(new ApiResponse(error.statuscode, error.message));
+  }
 });
 const sendphoto = AsyncHandeller(async (req, res) => {
   try {
@@ -164,4 +182,4 @@ const sendphoto = AsyncHandeller(async (req, res) => {
     return res.status(500).json(new ApiResponse(500, "something went wrong"));
   }
 });
-export { recrute, login, listTeacher, updateStandard, sendphoto };
+export { recrute, login, listTeacher, updateStandard, sendphoto, fire };

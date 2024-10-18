@@ -36,9 +36,10 @@ const uploadattenndance = AsyncHandeller(async (req, res) => {
 const listattendance = AsyncHandeller(async (req, res) => {
   const Date = req.params.Date;
   const school = req.params.School;
+  const standard = req.params.std;
   console.log(Date);
   const payload = await Attendance.findOne({
-    $and: [{ Date: Date }, { school: school }],
+    $and: [{ Date: Date }, { school: school }, { standard: standard }],
   });
   console.log(payload);
   return res

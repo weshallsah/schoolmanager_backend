@@ -1,24 +1,18 @@
 import sharp from "sharp";
+import mongoose from "mongoose";
 import fs from "fs";
-import path from "path";
-import { bonafide } from "../../public/svg/bonafide.js";
-import { progress } from "../../public/svg/progress.js";
-import { AsyncHandeller } from "../utils/AsyncHandeller.utils.js";
+import { ApiError } from "../utils/ApiError.utils.js";
 
-const generateCertificate = async (svg) => {
+const generateCertificate = async (svg, width, hight, photoId) => {
   try {
     const background = await sharp("./public/media//background.png")
-      .resize(850, 1200) // Resize the background if needed
+      .resize(width, hight) // Resize the background if needed
       .toBuffer();
-    // console.log(svg);
+
     let textSVG = svg;
     const svgstr = textSVG.replace(/&/g, "&amp;");
-    // .replace(/</g, "&lt;")
-    // .replace(/>/g, "&gt;")
-    // .replace(/"/g, "&quot;")
-    // Combine the background and text
-    const buffer = await Buffer.from(svgstr);
-    const result = await sharp(background)
+    const buffer = Buffer.from(svgstr);
+    let result = await sharp(background)
       .composite([
         {
           input: buffer,
@@ -28,15 +22,47 @@ const generateCertificate = async (svg) => {
       ])
       .png()
       .toBuffer();
-    fs.writeFileSync("certificate.png", result);
+    if (photoId != "") {
+      const DB = mongoose.connection.db;
+      // console.log(DB);
+      const photo = await DB.collection("schoolmanager.files").findOne({
+        _id: new mongoose.Types.ObjectId(photoId),
+      });
+      // console.log(photo);
+      const bucket = new mongoose.mongo.GridFSBucket(DB, {
+        bucketName: "schoolmanager",
+      });
+
+      const DBimage = await new Promise((resolve, rejects) => {
+        bucket
+          .openDownloadStream(photo._id)
+          .on("data", (data) => {
+            resolve(data);
+          })
+          .on("error", (error) => {
+            rejects("");
+          });
+      });
+      const studentphoto = await sharp(DBimage).resize(149, 179).toBuffer();
+
+      result = await sharp(result)
+        .composite([
+          {
+            input: studentphoto,
+            top: 140,
+            left: 50,
+          },
+        ])
+        .png()
+        .toBuffer();
+    }
+    fs.writeFileSync("./certificate.png", result);
     console.log("Certificate generated successfully!");
     return result;
   } catch (error) {
     console.error("Error generating certificate:", error);
+    throw new ApiError(error.statuscode, error.message);
   }
 };
-
-// Usage
-// generateCertificate("John Doe", "Introduction to Node.js", "October 10, 2024");
 
 export { generateCertificate };

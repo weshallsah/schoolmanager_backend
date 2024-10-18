@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   admission,
+  generateBonafide,
   generateLC,
   listStudent,
   removestudent,
@@ -26,5 +27,7 @@ routes.route("/list/:school").get(listStudent);
 routes.route("/marks/:school/:tream/:STD").get(Studentmarks);
 
 routes.route("/LeavingCertificate").post(generateLC);
+
+routes.route("/bonafide/:student/:school").get(generateBonafide);
 
 export default routes;

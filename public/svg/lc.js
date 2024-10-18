@@ -103,67 +103,58 @@ export const leavingcertificate = (
      <tspan font-weight="bold">School/Board Annual Exam result: </tspan> ${Examresult}
   </text>
 
-  <!-- Subjects -->
-  <text x="50" y="610" font-family="Arial" font-size="18"><tspan font-weight="bold">Subjects Studied:</tspan></text>
-  <text x="70" y="640" font-family="Arial" font-size="18">1) ${"English"}</text>
-  <text x="220" y="640" font-family="Arial" font-size="18">2) ${"Hindi"}</text>
-  <text x="370" y="640" font-family="Arial" font-size="18">3) ${"Marathi"}</text>
-  <text x="70" y="670" font-family="Arial" font-size="18">4) ${"Sanskrit"}</text>
-  <text x="220" y="670" font-family="Arial" font-size="18">5) ${"Math"}</text>
-  <text x="370" y="670" font-family="Arial" font-size="18">6) ${"EVS"}</text>
-
-  <text x="50" y="710" font-family="Arial" font-size="18">
+  <text x="50" y="610" font-family="Arial" font-size="18">
    <tspan font-weight="bold"> Promoted to Class: </tspan> ${Class} 
   </text>
-    <text x="500" y="710" font-family="Arial" font-size="18">
+    <text x="500" y="610" font-family="Arial" font-size="18">
      <tspan font-weight="bold">(in words) :</tspan> ${"Sixth"} 
   </text>
-  <text x="50" y="750" font-family="Arial" font-size="18">
+  <text x="50" y="650" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Month up to which pupil has paid dues: </tspan> ${lastpaiddues}
   </text>
 
-  <text x="50" y="790" font-family="Arial" font-size="18">
+  <text x="50" y="690" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Fee Concession: </tspan>${FeeConcession}
   </text>
 
-  <text x="50" y="830" font-family="Arial" font-size="18">
+  <text x="50" y="730" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Total No. of Working Days: </tspan> ${206}
   </text>
-   <text x="500" y="830" font-family="Arial" font-size="18">
+   <text x="500" y="730" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Present Days: </tspan> ${"Very Good"}
   </text>
-  <text x="50" y="870" font-family="Arial" font-size="18">
+  <text x="50" y="770" font-family="Arial" font-size="18">
     <tspan font-weight="bold">NCC/Boy Scout/Girl Guide: </tspan> ${activites}
   </text>
 
-  <text x="50" y="910" font-family="Arial" font-size="18">
+  <text x="50" y="810" font-family="Arial" font-size="18">
     <tspan font-weight="bold">General Conduct: </tspan> ${GeneralConduct}
   </text>
 
-  <text x="50" y="950" font-family="Arial" font-size="18">
+  <text x="50" y="850" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Date of Issue: </tspan> ${"31/08/2021"}
   </text>
 
-  <text x="50" y="990" font-family="Arial" font-size="18">
+  <text x="50" y="890" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Reason for Leaving: </tspan> ${ReasonforLeaving}
   </text>
 
-  <text x="50" y="1030" font-family="Arial" font-size="18">
+  <text x="50" y="930" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Remarks: </tspan> ${Remarks}
   </text>
 
   <!-- Footer -->
-  <line x1="50" y1="1080" x2="350" y2="1080" stroke="black" stroke-width="1"/>
-  <text x="200" y="1100" font-family="Arial" font-size="18" text-anchor="middle">Prepared by</text>
+  <line x1="50" y1="980" x2="350" y2="980" stroke="black" stroke-width="1"/>
+  <text x="200" y="1000" font-family="Arial" font-size="18" text-anchor="middle">Prepared by</text>
 
-  <line x1="500" y1="1080" x2="800" y2="1080" stroke="black" stroke-width="1"/>
-  <text x="650" y="1100" font-family="Arial" font-size="18" text-anchor="middle">Principal</text>
+  <line x1="500" y1="980" x2="800" y2="980" stroke="black" stroke-width="1"/>
+  <text x="650" y="1000" font-family="Arial" font-size="18" text-anchor="middle">Principal</text>
 
-  <text x="50" y="1130" font-family="Arial" font-size="16">
+  <text x="50" y="1030" font-family="Arial" font-size="16">
     These entries are as per General Register based on information provided by Parent at the time of 
     Admission
   </text>
-  <text x="50" y="1150" font-family="Arial" font-size="16">No change for whatsoever reason shall be accepted.</text>
+  <text x="50" y="1050" font-family="Arial" font-size="16">No change for whatsoever reason shall be accepted.</text>
 </svg>
 `;
 };

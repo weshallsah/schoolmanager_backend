@@ -77,6 +77,8 @@ const generateprogress = AsyncHandeller(async (req, res) => {
   try {
     const { markID, tream } = req.body;
     // const marks = await Mark.findById(markID);
+    console.log(markID);
+    console.log(tream);
     let marks = await Mark.aggregate([
       {
         $match: {
@@ -151,7 +153,7 @@ const generateprogress = AsyncHandeller(async (req, res) => {
       marks[0]["marks"],
       marks[0]["feedback"]
     );
-    const card = await generateCertificate(svg);
+    const card = await generateCertificate(svg,595,842,"");
     console.log(card);
     return res.status(200).send(card);
   } catch (error) {

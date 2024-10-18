@@ -13,6 +13,26 @@ const schoolSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  center: {
+    type: String,
+    require: true,
+  },
+  Taluka: {
+    type: String,
+    require: true,
+  },
+  district: {
+    type: String,
+    require: true,
+  },
+  mail: {
+    type: String,
+    require: true,
+  },
+  Medium: {
+    type: String,
+    require: true,
+  },
   state: {
     type: String,
     require: true,

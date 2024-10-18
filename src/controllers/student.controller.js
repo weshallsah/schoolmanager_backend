@@ -7,6 +7,7 @@ import fs from "fs";
 import { School } from "../models/School.models.js";
 import { generateCertificate } from "./generate.controller.js";
 import { leavingcertificate } from "../../public/svg/lc.js";
+import { bonafide } from "../../public/svg/bonafide.js";
 
 const admission = AsyncHandeller(async (req, res) => {
   try {
@@ -24,6 +25,10 @@ const admission = AsyncHandeller(async (req, res) => {
       aadhar,
       nationality,
       placeofbrith,
+      religion,
+      caste,
+      serial,
+      GRNo,
     } = await req.body;
     const isuser = await Student.findOne({ enroll });
     if (isuser != null) {
@@ -56,6 +61,10 @@ const admission = AsyncHandeller(async (req, res) => {
       photo,
       nationality,
       placeofbrith,
+      GRNo,
+      religion,
+      caste,
+      serial,
     });
     console.log(student);
     await fs.unlinkSync(avatarpath[0].path);
@@ -172,56 +181,136 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
 });
 
 const generateLC = AsyncHandeller(async (req, res) => {
-  const {
-    schoolId,
-    StudentID,
-    Examresult,
-    lastpaiddues,
-    FeeConcession,
-    activites,
-    GeneralConduct,
-    ReasonforLeaving,
-    Remarks,
-  } = req.body;
-  const school = await School.findOne({
-    school: schoolId.toLowerCase().trim(),
-  });
-  console.log(school);
-  const student = await Student.findOne({ enroll: StudentID });
-  console.log(student);
-  const date = student["createdAt"];
-  // console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`);
-  const svg = leavingcertificate(
-    schoolId,
-    school["address"],
-    school["Affiliated"],
-    school["state"],
-    school["contact"],
-    school["AffiliationNo"],
-    school["UDiseCode"],
-    school["SchoolCode"],
-    student["GR"],
-    schoolId,
-    "",
-    student["name"],
-    student["mothername"],
-    student["fathername"],
-    student["dob"],
-    student["nationality"],
-    student["religion"],
-    `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
-    student["admissionclass"],
-    student["standard"],
-    Examresult,
-    lastpaiddues,
-    FeeConcession,
-    activites,
-    GeneralConduct,
-    ReasonforLeaving,
-    Remarks
-  );
-  const certificate = await generateCertificate(svg);
-  return res.status(200).send(certificate);
+  try {
+    const {
+      schoolId,
+      StudentID,
+      Examresult,
+      lastpaiddues,
+      FeeConcession,
+      activites,
+      GeneralConduct,
+      ReasonforLeaving,
+      Remarks,
+    } = req.body;
+    if (schoolId.trim() == "" && StudentID.trim() == "") {
+      throw new ApiError(404, "please provide particular info");
+    }
+    const school = await School.findOne({
+      school: schoolId.toLowerCase().trim(),
+    });
+    console.log(school);
+    const student = await Student.findOne({ enroll: StudentID });
+    console.log(student);
+    const date = student["createdAt"];
+    // console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`);
+    const svg = leavingcertificate(
+      schoolId,
+      school["address"],
+      school["Affiliated"],
+      school["state"],
+      school["contact"],
+      school["AffiliationNo"],
+      school["UDiseCode"],
+      school["SchoolCode"],
+      student["GRNo"],
+      schoolId,
+      student["serial"],
+      student["name"],
+      student["mothername"],
+      student["fathername"],
+      student["dob"],
+      student["nationality"],
+      student["religion"],
+      `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+      student["admissionclass"],
+      student["standard"],
+      Examresult,
+      lastpaiddues,
+      FeeConcession,
+      activites,
+      GeneralConduct,
+      ReasonforLeaving,
+      Remarks
+    );
+    const certificate = await generateCertificate(svg, 850, 1200, "");
+    return res.status(200).send(certificate);
+  } catch (error) {
+    return res
+      .status(error.statuscode)
+      .json(new ApiResponse(error.statuscode, error.message));
+  }
 });
 
-export { admission, removestudent, listStudent, Studentmarks, generateLC };
+const generateBonafide = AsyncHandeller(async (req, res) => {
+  try {
+    const StudentId = req.params.student;
+    const schoolId = req.params.school;
+
+    const student = await Student.findOne({ enroll: StudentId });
+    if (student == null) {
+      throw new ApiError(404, "no student found");
+    }
+    const school = await School.findOne({
+      school: schoolId.toLowerCase().trim(),
+    });
+    console.log(student);
+    console.log(school);
+    if (school == null) {
+      throw new ApiError(404, "no school found");
+    }
+    const date = new Date();
+    console.log(date);
+    console.log(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
+    const svg = bonafide(
+      school["school"],
+      school["address"],
+      school["establish"],
+      school["center"],
+      school["Taluka"],
+      school["district"],
+      school["contact"],
+      school["mail"],
+      school["UDiseCode"],
+      school["Medium"],
+      student["GRNo"],
+      student["aadhar"],
+      student["enroll"],
+      student["name"],
+      student["mothername"],
+      student["nationality"],
+      student["mothertoungue"],
+      student["religion"],
+      student["caste"],
+      student["placeofbrith"],
+      student["dob"],
+      student["standard"],
+      `${student["createdAt"].getFullYear()}-${student[
+        "createdAt"
+      ].getMonth()}-${student["createdAt"].getDate()}`,
+      `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+    );
+    // generateCertificates(svg, 800, 1100, "670cc33b5bdac530295bc0c2");
+    const certificate = await generateCertificate(
+      svg,
+      800,
+      1100,
+      "670cc33b5bdac530295bc0c2"
+    );
+    res.status(200).send(certificate);
+  } catch (error) {
+    console.log("Error := ", error);
+    return res
+      .status(error.statuscode)
+      .json(new ApiResponse(error.statuscode, error.message));
+  }
+});
+
+export {
+  admission,
+  removestudent,
+  listStudent,
+  Studentmarks,
+  generateLC,
+  generateBonafide,
+};
