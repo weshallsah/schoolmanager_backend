@@ -77,6 +77,10 @@ const studentSchema = new mongoose.Schema(
     placeofbrith: {
       type: String,
     },
+    trem: {
+      type: Number,
+      default: 1,
+    },
   },
   {
     timestamps: true,

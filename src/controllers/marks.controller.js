@@ -19,6 +19,7 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
       ],
     });
     // console.log(isexist);
+    const year = new Date();
     if (isexist != null) {
       throw new ApiError(400, "Marks alredy added");
     }
@@ -27,9 +28,32 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
       teacher: new mongoose.Types.ObjectId(teacher),
       tream,
       subject,
+      year: year.getFullYear(),
       standard,
       marks: JSON.parse(marks),
     });
+    let mark = payload["marks"];
+    // console.log(payload);
+    console.log(mark);
+    let markobtain = 0;
+    for (let i = 0; i < mark.length; i++) {
+      markobtain += mark[i];
+    }
+    console.log(markobtain);
+    console.log(mark.length);
+    const percent = (markobtain / (mark.length * 100)) * 100;
+    const newtrem = tream == "1" ? 2 : 1;
+    const newstandard = tream == "2" ? 2 : standard;
+    console.log(newtrem);
+    console.log(newstandard);
+    if (percent > 35) {
+      const user = await Student.findByIdAndUpdate(student, {
+        trem: newtrem,
+        standard: newstandard,
+      });
+      // console.log(user);
+      user.save();
+    }
     return res
       .status(200)
       .json(new ApiResponse(200, payload, "Marrks uploaded sucessful"));
@@ -153,7 +177,7 @@ const generateprogress = AsyncHandeller(async (req, res) => {
       marks[0]["marks"],
       marks[0]["feedback"]
     );
-    const card = await generateCertificate(svg,595,842,"");
+    const card = await generateCertificate(svg, 595, 842, "");
     console.log(card);
     return res.status(200).send(card);
   } catch (error) {
@@ -163,4 +187,27 @@ const generateprogress = AsyncHandeller(async (req, res) => {
   }
 });
 
-export { uploadmarks, generate, generateprogress };
+const getmarks = AsyncHandeller(async (req, res) => {
+  try {
+    const std = req.params.std;
+    const teacher = req.params.id;
+    const payload = await Mark.aggregate([
+      {
+        $match: {
+          standard: std - "0",
+          teacher: new mongoose.Types.ObjectId(teacher),
+        },
+      },
+    ]);
+    console.log(payload);
+    return res
+      .status(200)
+      .json(new ApiResponse(200, payload, "Marks is fetched"));
+  } catch (error) {
+    return res
+      .status(error.statuscode)
+      .json(new ApiResponse(error.statuscode, error.message));
+  }
+});
+
+export { uploadmarks, generate, generateprogress, getmarks };

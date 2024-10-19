@@ -27,6 +27,10 @@ const markSchema = mongoose.Schema(
     standard: {
       type: Number,
     },
+    year: {
+      type: String,
+      require: true,
+    },
     marks: [
       {
         type: Number,

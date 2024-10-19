@@ -6,9 +6,13 @@ const attendanceSchema = mongoose.Schema(
       type: String,
       unique: true,
     },
-    school:{
-      type:String,
-      require:true,
+    school: {
+      type: String,
+      require: true,
+    },
+    standard: {
+      type: Number,
+      require: true,
     },
     present: [
       {

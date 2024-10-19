@@ -53,6 +53,10 @@ const schoolSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  trem: {
+    type: Number,
+    default: 1,
+  },
   establish: {
     type: Number,
     require: true,

@@ -98,10 +98,14 @@ const removestudent = AsyncHandeller(async (req, res) => {
 const listStudent = AsyncHandeller(async (req, res) => {
   try {
     const school = req.params.school;
+    const standard = req.params.std;
+    const year = new Date();
     const payload = await Student.aggregate([
       {
         $match: {
-          $and: [{ school }, { status: true }],
+          school,
+          status: true,
+          standard: standard - "0",
         },
       },
       {
@@ -109,9 +113,11 @@ const listStudent = AsyncHandeller(async (req, res) => {
           name: 1,
           enroll: 1,
           standard: 1,
+          trem: 1,
         },
       },
     ]);
+    console.log(payload);
     return res
       .status(200)
       .json(new ApiResponse(200, payload, "student fetch sucessfully"));
@@ -129,6 +135,8 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
     const tream = req.params.tream;
     const standard = req.params.STD;
     // console.log(tream);
+    const date = new Date().getFullYear();
+    const year = date.toString();
     const payload = await Student.aggregate([
       {
         $match: {
@@ -142,6 +150,11 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
           foreignField: "student",
           as: "result",
           pipeline: [
+            {
+              $match: {
+                year,
+              },
+            },
             {
               $project: {
                 tream: 1,

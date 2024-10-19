@@ -52,6 +52,7 @@ const teacherSchema = mongoose.Schema({
   standard: {
     type: Number,
     default: -1,
+    
   },
   status: {
     type: Boolean,

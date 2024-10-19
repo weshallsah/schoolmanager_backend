@@ -9,18 +9,21 @@ const uploadattenndance = AsyncHandeller(async (req, res) => {
     const { attendance } = req.body;
     const Date = req.params.Date;
     const school = req.params.School;
-    console.log(Date);
-    console.log(attendance);
+    let standard = req.params.std - "0";
     const enroll = JSON.parse(attendance);
-    console.log(enroll);
     let present = [];
+    console.log(enroll);
     for (let i = 0; i < enroll.length; i++) {
-      present.push(new mongoose.Types.ObjectId(enroll[i]));
+      if (enroll[i] != "") {
+        present.push(new mongoose.Types.ObjectId(enroll[i]));
+      } else {
+        present.push(null);
+      }
     }
-    // console.log(present);
     const payload = await Attendance.create({
       Date,
       school,
+      standard,
       present,
     });
     console.log(payload);
@@ -37,7 +40,6 @@ const listattendance = AsyncHandeller(async (req, res) => {
   const Date = req.params.Date;
   const school = req.params.School;
   const standard = req.params.std;
-  console.log(Date);
   const payload = await Attendance.findOne({
     $and: [{ Date: Date }, { school: school }, { standard: standard }],
   });
