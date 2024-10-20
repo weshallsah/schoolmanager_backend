@@ -1,6 +1,7 @@
 export const progress = (
   name,
   enroll,
+  school,
   standard,
   Devision,
   sub,
@@ -14,7 +15,7 @@ export const progress = (
   <!-- Header -->
   <rect width="800" height="100" fill="#1a3a5c"/>
   <text x="400" y="50" font-family="Arial, sans-serif" font-size="36" fill="white" text-anchor="middle" font-weight="bold">REPORT CARD</text>
-  <text x="400" y="85" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle">BEECHTOWN HIGH</text>
+  <text x="400" y="85" font-family="Arial, sans-serif" font-size="24" fill="white" text-anchor="middle">${school}</text>
   
   <!-- Student Info -->
   <text x="50" y="140" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">Name:</text>
@@ -44,20 +45,18 @@ export const progress = (
 `;
 
   const bottom = `<!-- Grading Scale -->
-  <text x="50" y="650" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" font-weight="bold">GRADING SCALE:</text>
-  <text x="50" y="675" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">A+ = 96-100    C = 76-80</text>
-  <text x="50" y="695" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">A = 91-95      D = 75 - 70</text>
-  <text x="50" y="715" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">B+ = 86-90    FAIL = 69 and below</text>
-  <text x="50" y="735" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">B = 81-85</text>
+  <text x="50" y="600" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" font-weight="bold">GRADING SCALE:</text>
+  <text x="50" y="625" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">A+ = 96-100    C = 76-80</text>
+  <text x="50" y="645" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">A = 91-95      D = 75 - 70</text>
+  <text x="50" y="665" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">B+ = 86-90    FAIL = 69 and below</text>
+  <text x="50" y="685" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">B = 81-85</text>
   
-  <!-- Attendance -->
-  <text x="400" y="650" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" font-weight="bold">TOTAL DAYS OF SCHOOL:</text>
-  <text x="400" y="675" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">Days Attended:</text>
-  <text x="510" y="675" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">87</text>
-  <line x1="510" y1="680" x2="740" y2="680" stroke="#1a3a5c" stroke-width="1"/>
-  <text x="400" y="705" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">Days Absent:</text>
-  <text x="495" y="705" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">3</text>
-  <line x1="495" y1="710" x2="740" y2="710" stroke="#1a3a5c" stroke-width="1"/>
+  <!-- school signature -->
+  <text x="400" y="600" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" font-weight="bold">SCHOOL SIGNATURE:</text>
+  <text x="400" y="625" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">Teacher Signe:</text>
+  <line x1="510" y1="630" x2="740" y2="630" stroke="#1a3a5c" stroke-width="1"/>
+  <text x="400" y="650" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">School Stamp:</text>
+  
 </svg>`;
 
   let fullsvg = header;
@@ -78,9 +77,9 @@ const subject = (y1, y2, feedback, grade, subjects) => {
   const sub = `<rect x="50" y="${y1}" width="233" height="30" fill="#f2f2f2"/>
   <rect x="283" y="${y1}" width="233" height="30" fill="#f2f2f2"/>
   <rect x="516" y="${y1}" width="234" height="30" fill="#f2f2f2"/>
-  <text x="60" y="${y2}" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c">${subjects}</text>
+  <text x="166" y="${y2}" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" text-anchor="middle">${subjects}</text>
   <text x="399" y="${y2}" font-family="Arial, sans-serif" font-size="14" fill="#1a3a5c" text-anchor="middle">${grade}</text>
-  <text x="526" y="${y2}" font-family="Arial, sans-serif" font-size="12" fill="#1a3a5c">${feedback}</text>`;
+  <text x="633" y="${y2}" font-family="Arial, sans-serif" font-size="12" fill="#1a3a5c" text-anchor="middle">${feedback}</text>`;
   return sub;
 };
 

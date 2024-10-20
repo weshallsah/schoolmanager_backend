@@ -8,6 +8,7 @@ import { School } from "../models/School.models.js";
 import { generateCertificate } from "./generate.controller.js";
 import { leavingcertificate } from "../../public/svg/lc.js";
 import { bonafide } from "../../public/svg/bonafide.js";
+import { ToWords } from "to-words";
 
 const admission = AsyncHandeller(async (req, res) => {
   try {
@@ -134,13 +135,13 @@ const Studentmarks = AsyncHandeller(async (req, res) => {
     const school = req.params.school;
     const tream = req.params.tream;
     const standard = req.params.STD;
-    // console.log(tream);
     const date = new Date().getFullYear();
     const year = date.toString();
     const payload = await Student.aggregate([
       {
         $match: {
           school,
+          standard: parseInt(standard),
         },
       },
       {
@@ -216,7 +217,8 @@ const generateLC = AsyncHandeller(async (req, res) => {
     const student = await Student.findOne({ enroll: StudentID });
     console.log(student);
     const date = student["createdAt"];
-    // console.log(`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`);
+    const toWord = new ToWords();
+    // console.log();
     const svg = leavingcertificate(
       schoolId,
       school["address"],
@@ -232,12 +234,18 @@ const generateLC = AsyncHandeller(async (req, res) => {
       student["name"],
       student["mothername"],
       student["fathername"],
-      student["dob"],
+      `${student["dob"].getDate()}/${student["dob"].getMonth()}/${student[
+        "dob"
+      ].getFullYear()}`,
+      `${toWord.convert(student["dob"].getDate())} ${toWord.convert(
+        student["dob"].getMonth()
+      )} ${toWord.convert(student["dob"].getFullYear())}`,
       student["nationality"],
       student["religion"],
       `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
       student["admissionclass"],
       student["standard"],
+      `${toWord.convert(parseInt(student["standard"]))}`,
       Examresult,
       lastpaiddues,
       FeeConcession,
@@ -276,7 +284,7 @@ const generateBonafide = AsyncHandeller(async (req, res) => {
     console.log(date);
     console.log(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
     const svg = bonafide(
-      school["school"],
+      school["school"].toUpperCase(),
       school["address"],
       school["establish"],
       school["center"],

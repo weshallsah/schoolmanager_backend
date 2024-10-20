@@ -74,7 +74,7 @@ const generate = AsyncHandeller(async (req, res) => {
     );
     marks = mark._id;
     const isexist = await Feedback.findOne({ marks });
-    console.log(isexist);
+    // console.log(isexist);
     if (isexist != null) {
       throw new ApiError(400, "certificate alredy generated");
       // console.log(payload);
@@ -107,7 +107,7 @@ const generateprogress = AsyncHandeller(async (req, res) => {
       {
         $match: {
           _id: new mongoose.Types.ObjectId(markID),
-          tream: tream - "0",
+          tream: parseInt(tream),
         },
       },
       {
@@ -121,6 +121,7 @@ const generateprogress = AsyncHandeller(async (req, res) => {
               $project: {
                 name: 1,
                 standard: 1,
+                school: 1,
                 enroll: 1,
                 division: 1,
               },
@@ -155,6 +156,7 @@ const generateprogress = AsyncHandeller(async (req, res) => {
           subject: 1,
           marks: 1,
           name: "$result.name",
+          school: "$result.school",
           enroll: "$result.enroll",
           standard: "$result.standard",
           division: "$result.division",
@@ -165,12 +167,13 @@ const generateprogress = AsyncHandeller(async (req, res) => {
     if (marks == null) {
       throw new ApiError(404, "Progress card not found");
     }
-    console.log(marks[0]);
+    console.log(marks);
     marks[0]["subject"] = JSON.parse(marks[0]["subject"][0]);
     marks[0]["feedback"] = JSON.parse(marks[0]["feedback"][0]);
     const svg = progress(
       marks[0]["name"],
       marks[0]["enroll"],
+      marks[0]["school"].toUpperCase(),
       marks[0]["standard"],
       marks[0]["division"],
       marks[0]["subject"],

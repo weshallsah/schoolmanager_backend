@@ -20,12 +20,31 @@ const uploadattenndance = AsyncHandeller(async (req, res) => {
         present.push(null);
       }
     }
-    const payload = await Attendance.create({
-      Date,
-      school,
-      standard,
-      present,
+    let payload = await Attendance.findOne({
+      $and: [
+        {
+          Date: Date,
+        },
+        {
+          school: school,
+        },
+        {
+          standard: standard,
+        },
+      ],
     });
+    console.log(payload);
+    if (payload != null) {
+      payload["present"] = present;
+      payload.save();
+    } else {
+      payload = await Attendance.create({
+        Date,
+        school,
+        standard,
+        present,
+      });
+    }
     console.log(payload);
     return res
       .status(200)

@@ -74,24 +74,25 @@ const recrute = AsyncHandeller(async (req, res) => {
         // { $and: [{ standard: Standard }, { school: school }] },
       ],
     });
+    console.log(isuser);
     if (isuser != null) {
       throw new ApiError(400, "Teacher already exists");
     }
-    if (Standard != "") {
-      console.log("checking inside standard");
-      isuser = await Teacher.findOne({
-        $and: [{ standard: Standard }, { school: school }],
-      });
-      if (isuser["standard"] != -1) {
-        throw new ApiError(400, "Standard alredy have teacher");
-      }
-    }
+    // if (Standard != "") {
+    //   console.log("checking inside standard");
+      // isuser = await Teacher.findOne({
+      //   $and: [{ standard: Standard }, { school: school }],
+      // });
+      // if (isuser["standard"] != -1) {
+      //   throw new ApiError(400, "Standard alredy have teacher");
+      // }
+    // }
     let photo = null;
-    if (
-      req.files &&
-      Array.isArray(req.files.avatar) &&
-      req.files.avatar.length > 0
-    ) {
+    // if (
+    //   req.files &&
+    //   Array.isArray(req.files.avatar) &&
+    //   req.files.avatar.length > 0
+    // ) {
       const avatarpath = req.files.avatar;
       const DB = mongoose.connection.db;
       const bucket = new mongoose.mongo.GridFSBucket(DB, {
@@ -101,7 +102,7 @@ const recrute = AsyncHandeller(async (req, res) => {
       photo = await stream.pipe(bucket.openUploadStream(name)).id;
       console.log(photo);
       await fs.unlinkSync(avatarpath[0].path);
-    }
+    // }
     const user = await Teacher.create({
       name,
       enroll,

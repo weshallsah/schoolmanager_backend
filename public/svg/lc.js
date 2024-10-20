@@ -1,9 +1,11 @@
+import { ToWords } from "to-words";
+
 export const leavingcertificate = (
-  school = "school name",
-  address = "school address",
-  Affiliated = "affilated by",
-  state = "Maharashtra",
-  contact = "9511286245",
+  school ,
+  address,
+  Affiliated ,
+  state,
+  contact,
   AffiliationNo,
   UDiseCode,
   SchoolCode,
@@ -14,11 +16,13 @@ export const leavingcertificate = (
   MotherName,
   FatherName,
   DoB,
+  Dobword,
   Nationality,
   Religion,
   DateofAdmission,
   AdmissionClass,
   Class,
+  classinword,
   Examresult,
   lastpaiddues,
   FeeConcession,
@@ -77,7 +81,7 @@ export const leavingcertificate = (
     <tspan font-weight="bold">Date of Birth: (in figures).:</tspan> ${DoB}
   </text>
   <text x="50" y="410" font-family="Arial" font-size="18">
-     <tspan font-weight="bold">(in words).:</tspan> ${" Thirtieth August Two Thousand Ten"}
+     <tspan font-weight="bold">(in words).:</tspan> ${Dobword}
   </text>
   <text x="50" y="450" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Nationality: </tspan> ${Nationality}
@@ -97,7 +101,7 @@ export const leavingcertificate = (
     
   </text>
   <text x="500" y="530" font-family="Arial" font-size="18">
-    <tspan font-weight="bold">(in words)</tspan> ${"Fifth"}
+    <tspan font-weight="bold">(in words)</tspan> ${classinword}
   </text>
   <text x="50" y="570" font-family="Arial" font-size="18">
      <tspan font-weight="bold">School/Board Annual Exam result: </tspan> ${Examresult}
@@ -107,7 +111,7 @@ export const leavingcertificate = (
    <tspan font-weight="bold"> Promoted to Class: </tspan> ${Class} 
   </text>
     <text x="500" y="610" font-family="Arial" font-size="18">
-     <tspan font-weight="bold">(in words) :</tspan> ${"Sixth"} 
+     <tspan font-weight="bold">(in words) :</tspan> ${classinword} 
   </text>
   <text x="50" y="650" font-family="Arial" font-size="18">
     <tspan font-weight="bold">Month up to which pupil has paid dues: </tspan> ${lastpaiddues}

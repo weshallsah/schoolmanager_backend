@@ -51,7 +51,7 @@ const studentSchema = new mongoose.Schema(
       type: Number,
     },
     dob: {
-      type: String,
+      type: Date,
     },
     address: {
       type: String,

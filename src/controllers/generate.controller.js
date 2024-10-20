@@ -56,7 +56,7 @@ const generateCertificate = async (svg, width, hight, photoId) => {
         .png()
         .toBuffer();
     }
-    fs.writeFileSync("./certificate.png", result);
+    fs.writeFileSync("./progresscard.png", result);
     console.log("Certificate generated successfully!");
     return result;
   } catch (error) {
