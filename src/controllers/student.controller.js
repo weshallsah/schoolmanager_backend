@@ -29,7 +29,6 @@ const admission = AsyncHandeller(async (req, res) => {
       religion,
       caste,
       serial,
-      GRNo,
     } = await req.body;
     const isuser = await Student.findOne({ enroll });
     if (isuser != null) {
@@ -47,6 +46,9 @@ const admission = AsyncHandeller(async (req, res) => {
       photo = await stream.pipe(bucket.openUploadStream(name)).id;
       console.log(photo);
     }
+    let _school = await School.findOne({ school });
+    _school["grno"]++;
+    _school.save();
     const student = await Student.create({
       name,
       enroll,
@@ -62,7 +64,7 @@ const admission = AsyncHandeller(async (req, res) => {
       photo,
       nationality,
       placeofbrith,
-      GRNo,
+      GRNo: _school["grno"],
       religion,
       caste,
       serial,
@@ -106,7 +108,7 @@ const listStudent = AsyncHandeller(async (req, res) => {
         $match: {
           school,
           status: true,
-          standard: standard - "0",
+          standard: parseInt(standard),
         },
       },
       {

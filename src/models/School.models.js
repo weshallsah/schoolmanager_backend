@@ -53,9 +53,9 @@ const schoolSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  trem: {
+  grno: {
     type: Number,
-    default: 1,
+    default: 0,
   },
   establish: {
     type: Number,

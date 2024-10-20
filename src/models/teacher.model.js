@@ -8,8 +8,8 @@ const teacherSchema = mongoose.Schema({
   },
   enroll: {
     type: String,
-    require: true,
-    unique: true,
+    unique: false,
+    default: 10,
   },
   photo: {
     type: mongoose.Types.ObjectId,
@@ -52,7 +52,6 @@ const teacherSchema = mongoose.Schema({
   standard: {
     type: Number,
     default: -1,
-    
   },
   status: {
     type: Boolean,
