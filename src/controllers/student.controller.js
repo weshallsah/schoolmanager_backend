@@ -29,7 +29,9 @@ const admission = AsyncHandeller(async (req, res) => {
       religion,
       caste,
       serial,
+      standard,
     } = await req.body;
+    console.log(standard);
     const isuser = await Student.findOne({ enroll });
     if (isuser != null) {
       throw new ApiError(400, "user already exists");
@@ -68,6 +70,7 @@ const admission = AsyncHandeller(async (req, res) => {
       religion,
       caste,
       serial,
+      standard,
     });
     console.log(student);
     await fs.unlinkSync(avatarpath[0].path);
@@ -278,7 +281,9 @@ const generateBonafide = AsyncHandeller(async (req, res) => {
     const StudentId = req.params.student;
     const schoolId = req.params.school;
 
-    const student = await Student.findOne({ enroll: StudentId });
+    const student = await Student.findOne({
+      $and: [{ enroll: StudentId }, { school: schoolId }],
+    });
     if (student == null) {
       throw new ApiError(404, "no student found");
     }
@@ -291,12 +296,14 @@ const generateBonafide = AsyncHandeller(async (req, res) => {
       throw new ApiError(404, "no school found");
     }
     const date = new Date();
-    console.log(date);
+    console.log(school["establish"]);
     console.log(`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`);
     const svg = bonafide(
       school["school"].toUpperCase(),
       school["address"],
-      school["establish"],
+      `${school["establish"].getFullYear()}-${school[
+        "establish"
+      ].getMonth()}-${school["establish"].getDate()}`,
       school["center"],
       school["Taluka"],
       school["district"],
@@ -314,19 +321,20 @@ const generateBonafide = AsyncHandeller(async (req, res) => {
       student["religion"],
       student["caste"],
       student["placeofbrith"],
-      student["dob"],
+      `${student["dob"].getDate()}/${student["dob"].getMonth()}/${student[
+        "dob"
+      ].getFullYear()}`,
       student["standard"],
       `${student["createdAt"].getFullYear()}-${student[
         "createdAt"
       ].getMonth()}-${student["createdAt"].getDate()}`,
       `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
     );
-    // generateCertificates(svg, 800, 1100, "670cc33b5bdac530295bc0c2");
     const certificate = await generateCertificate(
       svg,
       800,
       1100,
-      "670cc33b5bdac530295bc0c2"
+      student["photo"]
     );
     res.status(200).send(certificate);
   } catch (error) {

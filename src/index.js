@@ -10,6 +10,7 @@ dotenv.config({ path: ".env" });
 const server = http.createServer(app);
 
 connectDB().then(() => {
+  server.timeout = 0;
   server.listen(process.env.PORT || 8000, () => {
     console.log(`server is listening on PORT ${process.env.PORT || 8000}`);
 

@@ -65,19 +65,10 @@ const recrute = AsyncHandeller(async (req, res) => {
       address,
       school,
       isadmin,
-      Standard,
+      standard,
     } = req.body;
     console.log(email);
-    let isuser = await Teacher.findOne({
-      $or: [
-        { $and: [{ enroll: enroll }, { school: school }] },
-        { $and: [{ email: email }, { school: school }] },
-      ],
-    });
-    console.log(isuser);
-    if (isuser != null) {
-      throw new ApiError(400, "Teacher already exists");
-    }
+
     let photo = null;
     if (
       req.files &&
@@ -85,7 +76,6 @@ const recrute = AsyncHandeller(async (req, res) => {
       req.files.avatar.length > 0
     ) {
       const avatarpath = req.files.avatar;
-      print(avatarpath[0].path);
       const DB = mongoose.connection.db;
       const bucket = new mongoose.mongo.GridFSBucket(DB, {
         bucketName: "schoolmanager",
@@ -93,6 +83,17 @@ const recrute = AsyncHandeller(async (req, res) => {
       const stream = fs.createReadStream(avatarpath[0].path);
       photo = await stream.pipe(bucket.openUploadStream(name)).id;
       console.log(photo);
+      let isuser = await Teacher.findOne({
+        $or: [
+          { $and: [{ enroll: enroll }, { school: school }] },
+          { $and: [{ email: email }, { school: school }] },
+        ],
+      });
+      console.log(isuser);
+      if (isuser != null) {
+        await fs.unlinkSync(avatarpath[0].path);
+        throw new ApiError(400, "Teacher already exists");
+      }
       await fs.unlinkSync(avatarpath[0].path);
     }
     const user = await Teacher.create({
@@ -109,6 +110,7 @@ const recrute = AsyncHandeller(async (req, res) => {
       school,
       isadmin,
       photo,
+      standard,
     });
 
     const teacher = await Teacher.findById(user._id).select("-password");
@@ -140,6 +142,7 @@ const register = AsyncHandeller(async (req, res) => {
       UDiseCode,
       SchoolCode,
       grno,
+      establish,
       name,
       enroll,
       fathername,
@@ -203,6 +206,7 @@ const register = AsyncHandeller(async (req, res) => {
       SchoolCode,
       grno,
       enroll,
+      establish,
     });
     console.log(payload);
     const user = await Teacher.create({
@@ -215,7 +219,7 @@ const register = AsyncHandeller(async (req, res) => {
       password,
       dob,
       email,
-      address,
+      address: paddress,
       school: school.toLowerCase(),
       isadmin,
       photo,

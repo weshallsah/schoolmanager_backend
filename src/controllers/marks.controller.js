@@ -11,29 +11,31 @@ import { progress } from "../../public/svg/progress.js";
 const uploadmarks = AsyncHandeller(async (req, res) => {
   try {
     const { student, teacher, tream, standard, subject, marks } = req.body;
-    const isexist = await Mark.findOne({
+    let payload = await Mark.findOne({
       $and: [
         { student: new mongoose.Types.ObjectId(student) },
         { tream: tream },
         { standard: standard },
       ],
     });
-    // console.log(isexist);
+    console.log(payload);
     const year = new Date();
-    if (isexist != null) {
-      throw new ApiError(400, "Marks alredy added");
+    if (payload != null) {
+      payload["marks"] = JSON.parse(marks);
+      payload.save();
+    } else {
+      payload = await Mark.create({
+        student: new mongoose.Types.ObjectId(student),
+        teacher: new mongoose.Types.ObjectId(teacher),
+        tream,
+        subject,
+        year: year.getFullYear(),
+        standard,
+        marks: JSON.parse(marks),
+        ispass: true,
+      });
     }
-    const payload = await Mark.create({
-      student: new mongoose.Types.ObjectId(student),
-      teacher: new mongoose.Types.ObjectId(teacher),
-      tream,
-      subject,
-      year: year.getFullYear(),
-      standard,
-      marks: JSON.parse(marks),
-    });
     let mark = payload["marks"];
-    // console.log(payload);
     console.log(mark);
     let markobtain = 0;
     for (let i = 0; i < mark.length; i++) {
@@ -51,7 +53,6 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
         trem: newtrem,
         standard: newstandard,
       });
-      // console.log(user);
       user.save();
     }
     return res
@@ -60,8 +61,8 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log(`error := ${error}`);
     return res
-      .status(error.statusCode )
-      .json(new ApiResponse(error.statusCode , error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -92,8 +93,8 @@ const generate = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("Error := ", error);
     return res
-      .status(error.statusCode )
-      .json(new ApiResponse(error.statusCode , error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -185,8 +186,8 @@ const generateprogress = AsyncHandeller(async (req, res) => {
     return res.status(200).send(card);
   } catch (error) {
     return res
-      .status(error.statusCode )
-      .json(new ApiResponse(error.statusCode , error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -194,10 +195,12 @@ const getmarks = AsyncHandeller(async (req, res) => {
   try {
     const std = req.params.std;
     const teacher = req.params.id;
+    console.log(std);
+    console.log(teacher);
     const payload = await Mark.aggregate([
       {
         $match: {
-          standard: std - "0",
+          standard: parseInt(std),
           teacher: new mongoose.Types.ObjectId(teacher),
         },
       },
@@ -208,8 +211,8 @@ const getmarks = AsyncHandeller(async (req, res) => {
       .json(new ApiResponse(200, payload, "Marks is fetched"));
   } catch (error) {
     return res
-      .status(error.statusCode )
-      .json(new ApiResponse(error.statusCode , error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
