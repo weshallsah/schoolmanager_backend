@@ -45,8 +45,8 @@ const login = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("error := ", error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error, error.message));
   }
 });
 
@@ -72,22 +72,12 @@ const recrute = AsyncHandeller(async (req, res) => {
       $or: [
         { $and: [{ enroll: enroll }, { school: school }] },
         { $and: [{ email: email }, { school: school }] },
-        // { $and: [{ standard: Standard }, { school: school }] },
       ],
     });
     console.log(isuser);
     if (isuser != null) {
       throw new ApiError(400, "Teacher already exists");
     }
-    // if (Standard != "") {
-    //   console.log("checking inside standard");
-    // isuser = await Teacher.findOne({
-    //   $and: [{ standard: Standard }, { school: school }],
-    // });
-    // if (isuser["standard"] != -1) {
-    //   throw new ApiError(400, "Standard alredy have teacher");
-    // }
-    // }
     let photo = null;
     if (
       req.files &&
@@ -95,6 +85,7 @@ const recrute = AsyncHandeller(async (req, res) => {
       req.files.avatar.length > 0
     ) {
       const avatarpath = req.files.avatar;
+      print(avatarpath[0].path);
       const DB = mongoose.connection.db;
       const bucket = new mongoose.mongo.GridFSBucket(DB, {
         bucketName: "schoolmanager",
@@ -127,47 +118,118 @@ const recrute = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("error := ", error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
 const register = AsyncHandeller(async (req, res) => {
   try {
-    const { school, email, name, password } = req.body;
-    console.log(school);
-    console.log(email);
-    console.log(name);
-    console.log(password);
-    let isexist = await Teacher.findOne({
-      email,
-    });
-    console.log(isexist);
-    if (isexist != null) {
-      throw new ApiError(400, "Teacher is alredy exist");
-    }
-    isexist = await School.findOne({ school });
-    if (isexist == null) {
-      await School.create({
-        school: school.toLowerCase(),
-      });
-    }
-    const payload = await Teacher.create({
-      school: school.toLowerCase(),
-      email,
+    const {
+      school,
+      address,
+      Affiliated,
+      center,
+      Taluka,
+      district,
+      mail,
+      Medium,
+      state,
+      contact,
+      AffiliationNo,
+      UDiseCode,
+      SchoolCode,
+      grno,
       name,
+      enroll,
+      fathername,
+      mothername,
+      phone,
+      gender,
+      dob,
       password,
-      isadmin: true,
+      email,
+      paddress,
+      isadmin,
+      Standard,
+    } = req.body;
+    let photo = null;
+    let avatarpath;
+    if (
+      req.files &&
+      Array.isArray(req.files.avatar) &&
+      req.files.avatar.length > 0
+    ) {
+      avatarpath = req.files.avatar;
+      console.log(avatarpath[0].path);
+      const DB = mongoose.connection.db;
+      const bucket = new mongoose.mongo.GridFSBucket(DB, {
+        bucketName: "schoolmanager",
+      });
+      const stream = fs.createReadStream(avatarpath[0].path);
+      photo = stream.pipe(bucket.openUploadStream(name)).id;
+      console.log(photo);
+      console.log(avatarpath[0].path);
+    }
+    let isuser = await School.findOne({
+      school,
     });
-    const teacher = await Teacher.findById(payload["_id"]).select("-password");
+    if (isuser != null) {
+      throw new ApiError(400, "School alredy exists");
+    }
+    isuser = await Teacher.findOne({
+      $or: [
+        { $and: [{ enroll: enroll }, { school: school }] },
+        { $and: [{ email: email }, { school: school }] },
+      ],
+    });
+    console.log(isuser);
+    if (isuser != null) {
+      throw new ApiError(400, "Teacher already exists");
+    }
+    const payload = await School.create({
+      school: school.toLowerCase(),
+      address,
+      Affiliated,
+      center,
+      Taluka,
+      district,
+      mail,
+      Medium,
+      state,
+      contact,
+      AffiliationNo,
+      UDiseCode,
+      SchoolCode,
+      grno,
+      enroll,
+    });
+    console.log(payload);
+    const user = await Teacher.create({
+      name,
+      enroll,
+      fathername,
+      mothername,
+      phone,
+      gender,
+      password,
+      dob,
+      email,
+      address,
+      school: school.toLowerCase(),
+      isadmin,
+      photo,
+    });
+    fs.unlinkSync(avatarpath[0].path);
+    const teacher = await Teacher.findById(user._id).select("-password");
     return res
       .status(200)
       .json(new ApiResponse(200, teacher, "Teacher create successfully"));
   } catch (error) {
     console.log(`ERRoR := ${error}`);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -191,8 +253,8 @@ const listTeacher = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log(`error := ${error}`);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 const updateStandard = AsyncHandeller(async (req, res) => {
@@ -212,8 +274,8 @@ const updateStandard = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log(error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -250,8 +312,8 @@ const getteacher = AsyncHandeller(async (req, res) => {
       .json(new ApiResponse(200, teacher, "teacher fetch sucessfully"));
   } catch (error) {
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 export {

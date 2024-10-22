@@ -8,8 +8,6 @@ const teacherSchema = mongoose.Schema({
   },
   enroll: {
     type: String,
-    unique: false,
-    default: 10,
   },
   photo: {
     type: mongoose.Types.ObjectId,

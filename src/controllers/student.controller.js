@@ -77,8 +77,8 @@ const admission = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("error := ", error);
     return res
-      .status(error.statuscode)
-      .send(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .send(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -127,8 +127,8 @@ const listStudent = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log(`error := ${error}`);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -216,7 +216,12 @@ const generateLC = AsyncHandeller(async (req, res) => {
       school: schoolId.toLowerCase().trim(),
     });
     console.log(school);
-    const student = await Student.findOne({ enroll: StudentID });
+    const student = await Student.findOne({
+      $and: [{ enroll: StudentID }, { school: schoolId.toLowerCase() }],
+    });
+    if (student == null) {
+      throw new ApiError(404, "No student found with this enroll number");
+    }
     console.log(student);
     const date = student["createdAt"];
     const toWord = new ToWords();
@@ -257,11 +262,14 @@ const generateLC = AsyncHandeller(async (req, res) => {
       Remarks
     );
     const certificate = await generateCertificate(svg, 850, 1200, "");
+    student["status"] = false;
+    student.save();
     return res.status(200).send(certificate);
   } catch (error) {
+    console.log(error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 
@@ -324,8 +332,8 @@ const generateBonafide = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("Error := ", error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode)
+      .json(new ApiResponse(error.statusCode, error.message));
   }
 });
 

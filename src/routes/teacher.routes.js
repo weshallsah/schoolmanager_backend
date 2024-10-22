@@ -35,6 +35,14 @@ routes.route("/fire/:enroll").get(fire);
 
 routes.route("/standard/:id/:std").get(updateStandard);
 
-routes.route("/register").post(register);
+routes.route("/register").post(
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+  ]),
+  register
+);
 
 export default routes;

@@ -56,12 +56,13 @@ const generateCertificate = async (svg, width, hight, photoId) => {
         .png()
         .toBuffer();
     }
-    fs.writeFileSync("./progresscard.png", result);
+    // fs.unlinkSync();
+    fs.writeFileSync("./certificate.png", result);
     console.log("Certificate generated successfully!");
     return result;
   } catch (error) {
     console.error("Error generating certificate:", error);
-    throw new ApiError(error.statuscode, error.message);
+    throw new ApiError(error.statusCode , error.message);
   }
 };
 

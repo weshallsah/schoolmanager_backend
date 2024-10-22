@@ -26,8 +26,8 @@ const subjectAdd = AsyncHandeller(async (req, res) => {
       .json(new ApiResponse(200, payload, "subjectsadded successfully"));
   } catch (error) {
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 
@@ -40,8 +40,8 @@ const listsubjet = AsyncHandeller(async (req, res) => {
       .json(new ApiResponse(200, payload, "subjectsadded successfully"));
   } catch (error) {
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 

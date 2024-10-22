@@ -4,7 +4,7 @@ const attendanceSchema = mongoose.Schema(
   {
     Date: {
       type: String,
-      unique: true,
+      unique: false,
     },
     school: {
       type: String,

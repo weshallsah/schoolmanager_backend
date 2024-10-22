@@ -37,8 +37,8 @@ const Addschool = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("Error := ", error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 

@@ -60,8 +60,8 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log(`error := ${error}`);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 
@@ -92,8 +92,8 @@ const generate = AsyncHandeller(async (req, res) => {
   } catch (error) {
     console.log("Error := ", error);
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 
@@ -185,8 +185,8 @@ const generateprogress = AsyncHandeller(async (req, res) => {
     return res.status(200).send(card);
   } catch (error) {
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 
@@ -208,8 +208,8 @@ const getmarks = AsyncHandeller(async (req, res) => {
       .json(new ApiResponse(200, payload, "Marks is fetched"));
   } catch (error) {
     return res
-      .status(error.statuscode)
-      .json(new ApiResponse(error.statuscode, error.message));
+      .status(error.statusCode )
+      .json(new ApiResponse(error.statusCode , error.message));
   }
 });
 
