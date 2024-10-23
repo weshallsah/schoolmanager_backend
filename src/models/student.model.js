@@ -74,6 +74,10 @@ const studentSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
+    division: {
+      type: String,
+      default: "A",
+    },
     placeofbrith: {
       type: String,
     },

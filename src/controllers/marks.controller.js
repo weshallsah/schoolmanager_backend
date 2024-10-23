@@ -22,6 +22,7 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
     const year = new Date();
     if (payload != null) {
       payload["marks"] = JSON.parse(marks);
+      payload["progress"] = false;
       payload.save();
     } else {
       payload = await Mark.create({
@@ -32,7 +33,6 @@ const uploadmarks = AsyncHandeller(async (req, res) => {
         year: year.getFullYear(),
         standard,
         marks: JSON.parse(marks),
-        ispass: true,
       });
     }
     let mark = payload["marks"];
@@ -74,13 +74,16 @@ const generate = AsyncHandeller(async (req, res) => {
       { progress: true }
     );
     marks = mark._id;
-    const isexist = await Feedback.findOne({ marks });
+    let payload = await Feedback.findOne({ marks });
     // console.log(isexist);
-    if (isexist != null) {
-      throw new ApiError(400, "certificate alredy generated");
+    if (payload != null) {
+      payload["feedbacks"] = feedbacks;
+      // throw new ApiError(400, "certificate alredy generated");
       // console.log(payload);
+      payload.save();
+    } else {
+      payload = await Feedback.create({ feedbacks, marks });
     }
-    const payload = await Feedback.create({ feedbacks, marks });
     return res.status(200).json(
       new ApiResponse(
         200,
